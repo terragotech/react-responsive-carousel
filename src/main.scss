@@ -1,8 +1,8 @@
 // // basic imports
-@import "styles/variables";
-@import "styles/mixins/breakpoints";
-@import "styles/mixins/animation";
-@import "styles/mixins/utils";
+@import 'styles/variables';
+@import 'styles/mixins/breakpoints';
+@import 'styles/mixins/animation';
+@import 'styles/mixins/utils';
 
 // // resets, body, etc
 * {
@@ -21,7 +21,10 @@ body {
     color: $color-primary;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-weight: 700;
     margin: 20px 0;
 }
@@ -63,7 +66,9 @@ code {
 .wrapper {
     padding: 30px;
 
-    .demo-gallery, .demo-slider, .demo-carousel {
+    .demo-gallery,
+    .demo-slider,
+    .demo-carousel {
         margin: 30px -30px;
     }
 
@@ -76,11 +81,11 @@ code {
         &:last-child {
             border-bottom: 0;
         }
-
     }
 }
 
-.list-items, .summary {
+.list-items,
+.summary {
     margin-left: 50px;
 
     li {
@@ -94,45 +99,45 @@ code {
 }
 
 %demo-box {
-	margin: 50px auto;
+    margin: 50px auto;
 }
 
 .demo-gallery {
-	@extend %demo-box;
+    @extend %demo-box;
 
-	.thumb {
-		width: 200px;
-	}
+    .thumb {
+        width: 200px;
+    }
 }
 
 .demo-slider {
-	@extend %demo-box;
+    @extend %demo-box;
 }
 
 .demo-carousel {
-	@extend %demo-box;
-	width: 100%;
-	margin: 30px auto!important;
-	.thumb {
-		width: 120px;
-	}
+    @extend %demo-box;
+    width: 100%;
+    margin: 30px auto !important;
+    .thumb {
+        width: 120px;
+    }
 }
 
 .example {
-	margin: 20px 0;
+    margin: 20px 0;
 }
 
 .parent {
-	background: #333;
+    background: #333;
 }
 
 .page-carousel {
-	padding: 40px;
-	border: 1px solid #fff;
-	width: 80%;
-	margin: 40px auto;
+    padding: 40px;
+    border: 1px solid #fff;
+    width: 80%;
+    margin: 40px auto;
 }
 
 h5 {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }

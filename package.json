@@ -105,6 +105,8 @@
         "typescript": "^3.8.3"
     },
     "dependencies": {
+        "@material-ui/core": "^4.11.2",
+        "@material-ui/icons": "^4.9.1",
         "classnames": "^2.2.5",
         "prop-types": "^15.5.8",
         "react-easy-swipe": "^0.0.21"

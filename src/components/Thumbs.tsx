@@ -1,10 +1,13 @@
-import React, { Component, Children } from 'react';
+import React, { Component, Children, RefObject } from 'react';
 import klass from '../cssClasses';
 import { outerWidth } from '../dimensions';
 import CSSTranslate from '../CSSTranslate';
 // @ts-ignore
 import Swipe from 'react-easy-swipe';
 import getWindow from '../shims/window';
+import { Button } from '@material-ui/core';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const isKeyboardEvent = (e: React.MouseEvent | React.KeyboardEvent): e is React.KeyboardEvent =>
     e.hasOwnProperty('key');
@@ -21,6 +24,9 @@ export interface Props {
     selectedItem: number;
     thumbWidth: number;
     transitionTime: number;
+    editMode?: boolean;
+    onPhotoRemove?: (photoIndex: number) => void;
+    onPhotoAdd?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface State {
@@ -37,6 +43,7 @@ export default class Thumbs extends Component<Props, State> {
     private itemsWrapperRef?: HTMLDivElement;
     private itemsListRef?: HTMLUListElement;
     private thumbsRef?: HTMLLIElement[];
+    private imageInputRef: RefObject<HTMLInputElement> = React.createRef();
 
     static displayName = 'Thumbs';
 
@@ -130,7 +137,9 @@ export default class Thumbs extends Component<Props, State> {
             return;
         }
 
-        const total = Children.count(this.props.children);
+        const total = this.props.editMode
+            ? Children.count(this.props.children) + 2
+            : Children.count(this.props.children);
         const wrapperSize = this.itemsWrapperRef.clientWidth;
         const itemSize = this.props.thumbWidth ? this.props.thumbWidth : outerWidth(this.thumbsRef[0]);
         const visibleItems = Math.floor(wrapperSize / itemSize);
@@ -213,7 +222,8 @@ export default class Thumbs extends Component<Props, State> {
         // position can't be lower than 0
         position = position < 0 ? 0 : position;
         // position can't be higher than last postion
-        position = position >= this.state.lastPosition ? this.state.lastPosition : position;
+        const lastItemPosition = this.props.editMode ? this.state.lastPosition + 1 : this.state.lastPosition;
+        position = position >= lastItemPosition ? this.state.lastPosition : position;
 
         this.setState({
             firstItem: position,
@@ -249,15 +259,75 @@ export default class Thumbs extends Component<Props, State> {
                 onClick: this.handleClickItem.bind(this, index, this.props.children[index]),
                 onKeyDown: this.handleClickItem.bind(this, index, this.props.children[index]),
                 'aria-label': `${this.props.labels.item} ${index + 1}`,
-                style: { width: this.props.thumbWidth },
+                style: {
+                    width: this.props.thumbWidth,
+                    height: this.props.thumbWidth,
+                    position: 'relative',
+                    overflow: 'visible',
+                } as const,
             };
 
             return (
                 <li {...thumbProps} role="button" tabIndex={0}>
                     {img}
+                    {this.props.editMode && (
+                        <div
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                this.props.onPhotoRemove?.(index);
+                            }}
+                            style={{
+                                width: 30,
+                                height: 30,
+                                borderRadius: 15,
+                                backgroundColor: '#eb5757',
+                                position: 'absolute',
+                                top: -8,
+                                right: -8,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                boxShadow: '-2px 2px 3px 0px rgba(0,0,0,0.75)',
+                            }}
+                        >
+                            <DeleteIcon style={{ color: 'white', fontSize: 18 }} />
+                        </div>
+                    )}
                 </li>
             );
         });
+    }
+
+    handleClick = () => {
+        this.imageInputRef.current?.click();
+    };
+
+    renderAddPhotoButton() {
+        return (
+            this.props.editMode && (
+                <li style={{ display: 'inline-block', height: this.props.thumbWidth }} key={this.props.children.length}>
+                    <input
+                        accept="image/*"
+                        id="contained-button-file"
+                        type="file"
+                        onChange={this.props.onPhotoAdd}
+                        ref={this.imageInputRef}
+                        style={{ display: 'none' }}
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button
+                            style={{ position: 'relative', top: this.props.thumbWidth / 2 - 18 }}
+                            variant="contained"
+                            startIcon={<AddPhotoAlternateIcon />}
+                            onClick={this.handleClick}
+                        >
+                            ADD IMAGE
+                        </Button>
+                    </label>
+                </li>
+            )
+        );
     }
 
     render() {
@@ -317,6 +387,7 @@ export default class Thumbs extends Component<Props, State> {
                             innerRef={this.setItemsListRef}
                         >
                             {this.renderItems()}
+                            {this.renderAddPhotoButton()}
                         </Swipe>
                     ) : (
                         <ul
@@ -325,6 +396,7 @@ export default class Thumbs extends Component<Props, State> {
                             style={itemListStyles}
                         >
                             {this.renderItems()}
+                            {this.renderAddPhotoButton()}
                         </ul>
                     )}
                     <button

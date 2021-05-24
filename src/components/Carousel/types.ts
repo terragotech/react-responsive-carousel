@@ -70,6 +70,9 @@ export interface CarouselProps {
     animationHandler: 'slide' | 'fade' | AnimationHandler;
     swipeAnimationHandler: SwipeAnimationHandler;
     stopSwipingHandler: StopSwipingHandler;
+    editMode?: boolean;
+    onPhotoRemove?: (photoId: number) => void;
+    onPhotoAdd?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface CarouselState {

@@ -6,11 +6,11 @@ import(/* webpackChunkName: "carousel-component" */ './components/Carousel').the
         <Carousel
             showArrows
             infiniteLoop
-            autoPlay
             emulateTouch
             onClickItem={(...args) => console.log('onClickItem', ...args)}
             onChange={(...args) => console.log('onChange', ...args)}
             onClickThumb={(...args) => console.log('onClickThumb', ...args)}
+            editMode
         >
             <div>
                 <img src="assets/1.jpeg" />

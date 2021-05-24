@@ -51,14 +51,20 @@ export default {
 export const base = () => <Carousel {...getConfigurableProps()}>{baseChildren.props.children}</Carousel>;
 
 export const vertical = () => (
-    <Carousel axis="vertical" {...getConfigurableProps()}>
+    <Carousel
+        editMode
+        onPhotoAdd={(event: React.ChangeEvent<HTMLInputElement>) => alert(event.target.files)}
+        onPhotoRemove={(index: number) => alert(index)}
+        axis="vertical"
+        {...getConfigurableProps()}
+    >
         {baseChildren.props.children}
     </Carousel>
 );
 
 export const centerMode = () => (
     <Carousel
-        infiniteLoop
+        editMode
         centerMode
         centerSlidePercentage={number('centerSlidePercentage', 80, {}, mainGroupId)}
         {...getConfigurableProps()}
@@ -68,7 +74,12 @@ export const centerMode = () => (
 );
 
 export const handlers = () => (
-    <Carousel onClickThumb={action('click thumb')} onClickItem={action('click item')} onChange={action('change')}>
+    <Carousel
+        editMode
+        onClickThumb={action('click thumb')}
+        onClickItem={action('click item')}
+        onChange={action('change')}
+    >
         {baseChildren.props.children}
     </Carousel>
 );
@@ -93,6 +104,7 @@ export const withCustomStatusArrowsAndIndicators = () => {
 
     return (
         <Carousel
+            editMode
             statusFormatter={(current, total) => `Current slide: ${current} / Total: ${total}`}
             renderArrowPrev={(onClickHandler, hasPrev, label) =>
                 hasPrev && (

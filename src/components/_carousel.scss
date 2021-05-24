@@ -33,20 +33,23 @@
     &.control-prev {
         left: 0;
         &:before {
-            border-right: 8px solid #fff;
+            border-right: 8px solid #000;
         }
     }
 
     &.control-next {
         right: 0;
         &:before {
-            border-left: 8px solid #fff;
+            border-left: 8px solid #000;
         }
     }
 }
 
 .carousel-root {
     outline: none;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .carousel {
@@ -61,9 +64,11 @@
     }
 
     img {
+        height: 100%;
         width: 100%;
         display: inline-block;
         pointer-events: none;
+        object-fit: cover;
     }
 
     .carousel {
@@ -119,6 +124,10 @@
     }
 
     &.carousel-slider {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: relative;
         margin: 0;
         overflow: hidden;
@@ -197,6 +206,8 @@
         margin: 0;
         position: relative;
         text-align: center;
+        display: flex;
+        justify-content: center;
         // padding-bottom: 32px;
 
         img {

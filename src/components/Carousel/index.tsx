@@ -677,7 +677,6 @@ export default class Carousel extends React.Component<CarouselProps, CarouselSta
         if (!this.props.showThumbs || !this.props.children || Children.count(this.props.children) === 0) {
             return null;
         }
-
         return (
             <Thumbs
                 ref={this.setThumbsRef}
@@ -686,6 +685,9 @@ export default class Carousel extends React.Component<CarouselProps, CarouselSta
                 transitionTime={this.props.transitionTime}
                 thumbWidth={this.props.thumbWidth}
                 labels={this.props.labels}
+                editMode={this.props.editMode}
+                onPhotoRemove={this.props.onPhotoRemove}
+                onPhotoAdd={this.props.onPhotoAdd}
             >
                 {this.props.renderThumbs(this.props.children)}
             </Thumbs>
