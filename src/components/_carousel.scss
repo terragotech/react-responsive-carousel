@@ -288,4 +288,18 @@
             opacity: 1;
         }
     }
+    .delete-image-icon-container {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        background-color: #eb5757;
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: -2px 2px 3px 0px rgba(0, 0, 0, 0.75);
+    }
 }

@@ -276,20 +276,7 @@ export default class Thumbs extends Component<Props, State> {
                                 event.stopPropagation();
                                 this.props.onPhotoRemove?.(index);
                             }}
-                            style={{
-                                width: 30,
-                                height: 30,
-                                borderRadius: 15,
-                                backgroundColor: '#eb5757',
-                                position: 'absolute',
-                                top: -8,
-                                right: -8,
-                                cursor: 'pointer',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                boxShadow: '-2px 2px 3px 0px rgba(0,0,0,0.75)',
-                            }}
+                            className="delete-image-icon-container"
                         >
                             <DeleteIcon style={{ color: 'white', fontSize: 18 }} />
                         </div>
